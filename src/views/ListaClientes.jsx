@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, CircularProgress, Alert, Typography, TextField, InputAdornment} from '@mui/material';
+import { Box, CircularProgress, Alert, Typography, TextField, InputAdornment, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 function ListaClientes() {
@@ -90,6 +90,54 @@ return (
                     }}
                 />
             </Box>
+{/*Tabla de clientes */}
+      <TableContainer 
+        component={Paper} 
+        elevation={4} 
+        sx={{ borderRadius: '12px', overflow: 'hidden', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+      >
+        <Table sx={{ minWidth: 700 }} aria-label="tabla de clientes">
+          <TableHead sx={{ backgroundColor: '#1976d2' }}>
+            <TableRow>   
+              <TableCell sx={{ color: '#ffffff', fontWeight: 600, fontSize: '14px', py: 2 }}>ID</TableCell>
+              <TableCell sx={{ color: '#ffffff', fontWeight: 600, fontSize: '14px', py: 2 }}>Nombre Completo</TableCell>
+              <TableCell sx={{ color: '#ffffff', fontWeight: 600, fontSize: '14px', py: 2 }}>Email</TableCell>
+              <TableCell sx={{ color: '#ffffff', fontWeight: 600, fontSize: '14px', py: 2 }}>Teléfono</TableCell>
+              <TableCell sx={{ color: '#ffffff', fontWeight: 600, fontSize: '14px', py: 2 }}>Ciudad</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {clientesFiltrados.length > 0 ? (
+              clientesFiltrados.map((cliente) => (
+                <TableRow 
+                  key={cliente.id}
+                  sx={{ 
+                    transition: 'background-color 0.2s ease',
+                    '&:nth-of-type(odd)': { backgroundColor: '#f8fafc' },
+                    '&:hover': { backgroundColor: '#f1f5f9', cursor: 'pointer' }
+                  }}
+                >
+                  <TableCell sx={{ fontWeight: 600, color: '#334155' }}>{cliente.id}</TableCell>
+                  <TableCell sx={{ fontWeight: 500, color: '#1e293b', textTransform: 'capitalize' }}>
+                    {cliente.name.firstname} {cliente.name.lastname}
+                  </TableCell>
+                  <TableCell sx={{ color: '#475569' }}>{cliente.email}</TableCell>
+                  <TableCell sx={{ color: '#475569', fontFamily: 'monospace' }}>{cliente.phone}</TableCell>
+                  <TableCell sx={{ color: '#1e293b', textTransform: 'capitalize', fontWeight: 500 }}>
+                    {cliente.address.city}
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5} align="center" sx={{ py: 4, color: '#94a3b8', fontStyle: 'italic' }}>
+                  No se encontraron clientes que coincidan con la búsqueda.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
         </Box>
     );
 }
