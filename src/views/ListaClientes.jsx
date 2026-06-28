@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Box, CircularProgress, Alert, Typography, TextField, InputAdornment, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import AltaCliente from '../components/common/AltaCliente';
 
-function ListaClientes() {
+const ListaClientes= () => {
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -51,8 +52,8 @@ function ListaClientes() {
 
 //Filtro por apellido o ciudad
 const clientesFiltrados = clientes.filter((cliente) => {
-      const apellido = cliente.name.lastname.toLowerCase();
-      const ciudad = cliente.address.city.toLowerCase();
+      const apellido = cliente?.name?.lastname?.toLowerCase() || "";
+      const ciudad = cliente?.address?.city?.toLowerCase() || "";
       const busquedaLower = busqueda.toLowerCase();
 
       return apellido.includes(busquedaLower) || ciudad.includes(busquedaLower);
@@ -68,6 +69,8 @@ return (
                     Visualizá y filtrá los usuarios registrados en el sistema central.
                 </Typography>
             </Box>
+{/* Formulario de Alta de Clientes */}
+      <AltaCliente onClienteCreado={(nuevo) => setClientes(prev => [...prev, nuevo])} />    
 
             {/* Barra de Búsqueda*/}
             <Box sx={{ mb: 3 }}>
@@ -81,15 +84,18 @@ return (
                         width: '100%', maxWidth: '450px', backgroundColor: '#ffffff',
                         '& .MuiOutlinedInput-root': { borderRadius: '8px', '&:hover fieldset': { borderColor: '#1976d2' } }
                     }}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon sx={{ color: '#94a3b8' }} />
-                            </InputAdornment>
-                        ),
+                    slotProps={{
+                        input: {
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon sx={{ color: '#94a3b8' }} />
+                                </InputAdornment>
+                            ),
+                        },
                     }}
                 />
             </Box>
+
 {/*Tabla de clientes */}
       <TableContainer 
         component={Paper} 
@@ -110,7 +116,7 @@ return (
             {clientesFiltrados.length > 0 ? (
               clientesFiltrados.map((cliente) => (
                 <TableRow 
-                  key={cliente.id}
+                  key={`${cliente.id}-${cliente.email || "nuevo"}`}
                   sx={{ 
                     transition: 'background-color 0.2s ease',
                     '&:nth-of-type(odd)': { backgroundColor: '#f8fafc' },
@@ -119,12 +125,12 @@ return (
                 >
                   <TableCell sx={{ fontWeight: 600, color: '#334155' }}>{cliente.id}</TableCell>
                   <TableCell sx={{ fontWeight: 500, color: '#1e293b', textTransform: 'capitalize' }}>
-                    {cliente.name.firstname} {cliente.name.lastname}
+                    {cliente?.name?.firstname || "" } {cliente?.name?.lastname || ""}
                   </TableCell>
                   <TableCell sx={{ color: '#475569' }}>{cliente.email}</TableCell>
                   <TableCell sx={{ color: '#475569', fontFamily: 'monospace' }}>{cliente.phone}</TableCell>
                   <TableCell sx={{ color: '#1e293b', textTransform: 'capitalize', fontWeight: 500 }}>
-                    {cliente.address.city}
+                    {cliente?.address?.city || ""}
                   </TableCell>
                 </TableRow>
               ))
