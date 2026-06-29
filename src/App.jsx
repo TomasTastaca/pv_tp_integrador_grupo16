@@ -3,6 +3,7 @@ import { Container } from "@mui/material";
 import { AdminProvider } from "./context/AdminContext";
 import Header from "./components/layout/Header";
 import Nav from "./components/layout/Nav";
+import Footer from "./components/layout/Footer";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Login from "./views/Login";
 import Dashboard from "./views/Dashboard";
@@ -27,6 +28,7 @@ const App = () => {
                 <Container sx={{ marginTop: 4 }}>
                   <Dashboard />
                 </Container>
+                <Footer />
               </ProtectedRoute>
             }
           />
@@ -40,6 +42,7 @@ const App = () => {
                 <Container sx={{ marginTop: 4 }}>
                   <ListaClientes />
                 </Container>
+                <Footer />
               </ProtectedRoute>
             }
           />
@@ -53,6 +56,7 @@ const App = () => {
                 <Container sx={{ marginTop: 4 }}>
                   <DetalleCliente />
                 </Container>
+                <Footer />
               </ProtectedRoute>
             }
           />
