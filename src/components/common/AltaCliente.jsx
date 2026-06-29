@@ -12,6 +12,7 @@ const AltaCliente= ({ onClienteCreado }) => {
 
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [mensaje, setMensaje] = useState("");
 
   const handleChange = (e) => {
     setNuevoCliente({
@@ -36,9 +37,10 @@ const AltaCliente= ({ onClienteCreado }) => {
 
       const data = await res.json();
 
-      console.log("Cliente creado:", data);
+       console.log("Cliente creado:", data);
 
-      setOpen(true);
+       setMensaje(`Cliente creado exitosamente . ID: ${data.id}`);
+       setOpen(true);
 
       if (onClienteCreado) {
         onClienteCreado ({
@@ -72,8 +74,8 @@ const AltaCliente= ({ onClienteCreado }) => {
 
   return (
     <Paper sx={{ p: 3, mb: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Formulario de Alta de Cliente
+      <Typography variant="h6" sx={{ mb: 2, fontWeight: 600, color: '#40495f' }}>
+        Ingrese los datos del cliente
       </Typography>
 
       <Box component="form" onSubmit={handleSubmit} sx={{ display: "grid", gap: 2 }}>
@@ -118,9 +120,12 @@ const AltaCliente= ({ onClienteCreado }) => {
         </Button>
       </Box>
 
-      <Snackbar open={open} autoHideDuration={3000} onClose={() => setOpen(false)}>
-        <Alert severity="success">
-          Cliente creado correctamente
+      <Snackbar open={open}
+       autoHideDuration={3000}
+       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+       onClose={() => setOpen(false)}>
+        <Alert severity="success" sx={{ width: "100%" ,backgroundColor: "#4caf50", color: "white"}}>
+         {mensaje} {/*mensaje con el id del cliente creado para el snackbar*/}
         </Alert>
       </Snackbar>
     </Paper>
