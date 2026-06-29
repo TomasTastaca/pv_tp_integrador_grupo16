@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Box, CircularProgress, Alert, Typography, TextField, InputAdornment, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
+import { Button, Box, CircularProgress, Alert, Typography, TextField, InputAdornment, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AltaCliente from '../components/common/AltaCliente';
+import {Link} from 'react-router-dom';
 
 const ListaClientes= () => {
   const [clientes, setClientes] = useState([]);
@@ -110,6 +111,7 @@ return (
               <TableCell sx={{ color: '#ffffff', fontWeight: 600, fontSize: '14px', py: 2 }}>Email</TableCell>
               <TableCell sx={{ color: '#ffffff', fontWeight: 600, fontSize: '14px', py: 2 }}>Teléfono</TableCell>
               <TableCell sx={{ color: '#ffffff', fontWeight: 600, fontSize: '14px', py: 2 }}>Ciudad</TableCell>
+              <TableCell sx={{ color: '#ffffff', fontWeight: 600, fontSize: '14px', py: 2 }}>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -132,11 +134,22 @@ return (
                   <TableCell sx={{ color: '#1e293b', textTransform: 'capitalize', fontWeight: 500 }}>
                     {cliente?.address?.city || ""}
                   </TableCell>
+                  <TableCell>
+                    <Button
+                     component={Link}
+                     to={`/clientes/${cliente.id}`}
+                    variant="contained"
+                      color="primary"
+                      size="small"
+                      >
+                      Ver Ficha 
+                    </Button>
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={5} align="center" sx={{ py: 4, color: '#94a3b8', fontStyle: 'italic' }}>
+                <TableCell colSpan={6} align="center" sx={{ py: 4, color: '#94a3b8', fontStyle: 'italic' }}>
                   No se encontraron clientes que coincidan con la búsqueda.
                 </TableCell>
               </TableRow>
