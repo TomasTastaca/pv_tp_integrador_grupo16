@@ -64,15 +64,23 @@ return (
         <Box sx={{ p: { xs: 2, md: 4 }, maxWidth: '1400px', margin: '0 auto' }}>
             <Box sx={{ mb: 4, borderBottom: '2px solid #f1f5f9', pb: 2 }}>
                 <Typography variant="h4" component="h2" sx={{ fontWeight: 700, color: '#0f172a', letterSpacing: '-0.5px' }}>
+                    Formulario de Alta de Clientes
+                </Typography>
+                <Typography variant="body2" sx={{ color: '#64748b', mt: 0.5 }}>
+                    Complete los datos para registrar un nuevo cliente.
+                </Typography>
+            </Box>
+{/* Formulario de Alta de Clientes */}
+      <AltaCliente onClienteCreado={(nuevo) => setClientes(prev => [...prev, nuevo])} />    
+        {/*titulo de Lista de Clientes*/}
+                <Box sx={{ mb: 4, borderBottom: '2px solid #f1f5f9', pb: 2 }}>
+                <Typography variant="h4" component="h2" sx={{ fontWeight: 700, color: '#0f172a', letterSpacing: '-0.5px' }}>
                     Listado de Clientes
                 </Typography>
                 <Typography variant="body2" sx={{ color: '#64748b', mt: 0.5 }}>
                     Visualizá y filtrá los usuarios registrados en el sistema central.
                 </Typography>
             </Box>
-{/* Formulario de Alta de Clientes */}
-      <AltaCliente onClienteCreado={(nuevo) => setClientes(prev => [...prev, nuevo])} />    
-
             {/* Barra de Búsqueda*/}
             <Box sx={{ mb: 3 }}>
                 <TextField
